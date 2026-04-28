@@ -1,0 +1,5 @@
+--sky-blue-light: #8ecae6ff;
+--blue-green: #219ebcff;
+--deep-space-blue: #023047ff;
+--amber-flame: #ffb703ff;
+--princeton-orange: #fb8500ff;

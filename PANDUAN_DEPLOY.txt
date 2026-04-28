@@ -1,0 +1,48 @@
+PANDUAN MIGRASI KE HOSTING SERVER
+=================================
+
+Berikut adalah langkah-langkah untuk memindahkan aplikasi perpustakaan ini ke hosting server:
+
+1. PERSIAPAN FILE
+   - Kompres (ZIP) semua file dan folder yang ada di dalam folder proyek ini (termasuk folder `admin`, `classes`, `config`, `uploads`, dll).
+   - Pastikan file `database.sql` yang baru saja dibuat ikut terbawa.
+
+2. UPLOAD KE HOSTING
+   - Login ke cPanel atau File Manager hosting Anda.
+   - Buka folder `public_html` (atau folder sub-domain jika ingin ditaruh di subdomain).
+   - Upload file ZIP yang sudah dibuat.
+   - Ekstrak (Unzip) file tersebut.
+
+3. SETTING DATABASE
+   - Di cPanel, cari menu "MySQL Databases".
+   - Buat database baru (misalnya: `u12345_perpustakaan`).
+   - Buat user database baru (misalnya: `u12345_admin`) dan passwordnya.
+   - Tambahkan user ke database (Add User to Database) dan centang "ALL PRIVILEGES".
+   - Buka menu "phpMyAdmin" di cPanel.
+   - Pilih database yang baru dibuat di sidebar kiri.
+   - Klik tab "Import".
+   - Pilih file `database.sql` yang ada di hasil ekstrak tadi.
+   - Klik "Go" atau "Kirim" untuk mengimpor struktur dan data.
+
+4. KONFIGURASI KONEKSI
+   - Di File Manager hosting, buka file `config/database.php`.
+   - Edit bagian berikut sesuai data database hosting Anda:
+     
+     $host = 'localhost'; // Biasanya tetap localhost
+     $dbname = 'nama_database_hosting_anda'; (contoh: u12345_perpustakaan)
+     $username = 'username_database_hosting_anda'; (contoh: u12345_admin)
+     $password = 'password_database_anda';
+
+   - Simpan perubahan.
+
+5. PERIZINAN FOLDER (PERMISSIONS)
+   - Pastikan folder `uploads` dan sub-foldernya memiliki izin (permissions) agar bisa ditulisi.
+   - Biasanya settingan `755` sudah cukup. Jika gagal upload gambar, coba ubah sementara ke `777`.
+
+6. SELESAI
+   - Coba akses website Anda melalui browser.
+   - Login ke admin dan cek fitur-fitur utama.
+
+CATATAN TAMBAHAN:
+- Jika server hosting menggunakan versi PHP yang berbeda jauh (misal PHP 5.x), mungkin akan ada error. Aplikasi ini disarankan berjalan di PHP 7.4 atau 8.x.
+- Pastikan ekstensi `pdo_mysql` dan `gd` (untuk gambar) aktif di hosting (biasanya sudah default aktif).

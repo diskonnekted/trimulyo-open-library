@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # PENTING: Jangan ubah baris ini. 
+    # Ini mencegah folder .well-known (untuk SSL) dari aturan rewrite lainnya.
+    RewriteRule ^\.well-known/ - [L,NC]
+</IfModule>
+
+# Pastikan folder ini bisa diakses
+<IfModule mod_authz_core.c>
+    <FilesMatch "^test\.txt$">
+        Require all granted
+    </FilesMatch>
+</IfModule>
+
+# Mencegah listing direktori (opsional, untuk keamanan)
+Options -Indexes

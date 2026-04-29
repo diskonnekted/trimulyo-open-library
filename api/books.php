@@ -15,16 +15,21 @@ try {
         $stmt = $pdo->prepare("SELECT b.id, b.title, b.author, b.publisher, b.year, b.isbn, b.cover_image, c.name as category 
                                FROM books b 
                                LEFT JOIN categories c ON b.category_id = c.id 
-                               WHERE b.title LIKE ? OR b.author LIKE ? OR b.isbn LIKE ? 
-                               ORDER BY b.created_at DESC LIMIT ? OFFSET ?");
+                               WHERE b.title LIKE :q OR b.author LIKE :q OR b.isbn LIKE :q 
+                               ORDER BY b.created_at DESC LIMIT :limit OFFSET :offset");
         $searchTerm = "%$q%";
-        $stmt->execute([$searchTerm, $searchTerm, $searchTerm, $limit, $offset]);
+        $stmt->bindValue(':q', $searchTerm, PDO::PARAM_STR);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
     } else {
         $stmt = $pdo->prepare("SELECT b.id, b.title, b.author, b.publisher, b.year, b.isbn, b.cover_image, c.name as category 
                                FROM books b 
                                LEFT JOIN categories c ON b.category_id = c.id 
-                               ORDER BY b.created_at DESC LIMIT ? OFFSET ?");
-        $stmt->execute([$limit, $offset]);
+                               ORDER BY b.created_at DESC LIMIT :limit OFFSET :offset");
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     $books = $stmt->fetchAll();

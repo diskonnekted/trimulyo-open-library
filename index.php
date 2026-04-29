@@ -236,8 +236,8 @@ $hero_image = function_exists('getSetting') ? getSetting($pdo, 'hero_image', '')
         </div>
 
         <?php if (count($recentBooks) > 0): ?>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <?php foreach (array_slice($recentBooks, 0, 8) as $book): ?>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <?php foreach (array_slice($recentBooks, 0, 12) as $book): ?>
             <div class="group bg-white rounded-[2rem] p-4 shadow-sm border border-gray-100 hover:shadow-2xl transition-all duration-500 flex flex-col h-full card-hover">
                 <div class="aspect-[3/4] bg-gray-100 rounded-[1.5rem] overflow-hidden relative mb-6">
                     <?php if ($book['cover_image']): ?>
